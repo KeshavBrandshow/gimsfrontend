@@ -1,181 +1,132 @@
 "use client";
 
-import React, { useEffect, useRef, useState } from "react";
-import { Swiper, SwiperSlide } from "swiper/react";
-import { EffectCoverflow, Autoplay } from "swiper/modules";
-
-import "swiper/css";
-import "swiper/css/effect-coverflow";
+import Image from "next/image";
+import { motion } from "framer-motion";
 
 export default function Life() {
-  const swiperRef = useRef(null);
-  const [activeIndex, setActiveIndex] = useState(0);
-
-  const images = [
-    {
-      img: "/image/student-placement/prince-bca.png",
-      name: "Prince",
-      batch: "2022–2024",
-      companyLogo: "/image/our-recuiters/deloitte.webp",
-    },
-    {
-      img: "/image/student-placement/prachi-bca.png",
-      name: "Prachi",
-      batch: "2021–2023",
-      companyLogo: "/image/our-recuiters/hdfc-bank.webp",
-    },
-    {
-      img: "/image/student-placement/anurag-kumar-bca.png",
-      name: "Anurag Kumar",
-      batch: "2020–2022",
-      companyLogo: "/image/our-recuiters/kpmg.webp",
-    },
-    {
-      img: "/image/student-placement/pratham.png",
-      name: "Pratham",
-      batch: "2022–2024",
-      companyLogo: "/image/our-recuiters/icici.webp",
-    },
-    {
-      img: "/image/student-placement/deepak-pratap.png",
-      name: "Deepak-Pratap",
-      batch: "2021–2023",
-      companyLogo: "/image/our-recuiters/first-point-creations.webp",
-    },
-    {
-      img: "/image/student-placement/shataakshi-sharma.png",
-      name: "Shataakshi Sharma",
-      batch: "2020–2023",
-      companyLogo: "/image/our-recuiters/airtel.webp",
-    },
-    {
-      img: "/image/student-placement/priyanka-kumari.png",
-      name: "Priyanka Kumari",
-      batch: "2022–2024",
-      companyLogo: "/image/our-recuiters/ey.webp",
-    },
-    {
-      img: "/image/student-placement/chandan-kumar.webp",
-      name: "Chandan Kumar",
-      batch: "2021–2023",
-      companyLogo: "/image/our-recuiters/smc-logo.webp",
-    },
-    {
-      img: "/image/student-placement/anjali.png",
-      name: "Anjali",
-      batch: "2020–2022",
-      companyLogo: "/image/our-recuiters/infosys.webp",
-    },
-  ];
-
-  // tilt left / right only logic
-  useEffect(() => {
-    if (!swiperRef.current) return;
-    const slides = swiperRef.current.slides;
-
-    slides.forEach((slide) => {
-      const img = slide.querySelector(".slide-img");
-      img?.classList.remove("tilt-left", "tilt-right");
-    });
-
-    const visible = Array.from(slides).filter((slide) =>
-      slide.classList.contains("swiper-slide-visible")
-    );
-
-    if (visible.length > 0) {
-      visible[0].querySelector(".slide-img")?.classList.add("tilt-left");
-      visible[visible.length - 1]
-        .querySelector(".slide-img")
-        ?.classList.add("tilt-right");
-    }
-  }, [activeIndex]);
-
   return (
-    <section className="bg-linear-to-r from-blue-900 via-blue-600 via-blue-300 to-yellow-400">
-      <div className="max-w-[1500px] mx-auto overflow-hidden py-8 px-4 sm:px-6 lg:px-10">
-        <Swiper
-          effect="coverflow"
-          centeredSlides
-          loop
-          speed={900}
-          autoplay={{
-            delay: 1600,
-            disableOnInteraction: false,
-            pauseOnMouseEnter: true,
-          }}
-          coverflowEffect={{
-            rotate: 0,
-            stretch: 0,
-            depth: 180,
-            modifier: 1.4,
-            slideShadows: false,
-          }}
-          modules={[EffectCoverflow, Autoplay]}
-          onSwiper={(swiper) => (swiperRef.current = swiper)}
-          onSlideChange={(swiper) => setActiveIndex(swiper.realIndex)}
-          // RESPONSIVE SETTINGS
-          breakpoints={{
-            0: {
-              slidesPerView: 1.2,
-              spaceBetween: 16,
-            },
-            640: {
-              slidesPerView: 2,
-              spaceBetween: 24,
-            },
-            1024: {
-              slidesPerView: 3,
-              spaceBetween: 40,
-            },
-            1280: {
-              slidesPerView: 4,
-              spaceBetween: 60,
-            },
-          }}
-        >
-          {images.map((item, i) => (
-            <SwiperSlide key={i}>
-              <div className="relative w-full h-[260px] sm:h-[280px] md:h-[320px] lg:h-[360px] xl:h-[380px] group">
-                {/* MAIN IMAGE */}
-                <img
-                  src={item.img}
-                  alt={item.name}
-                  className="slide-img w-full h-full object-cover rounded-xl"
-                />
+    <div className="w-full">
 
-                {/* ALWAYS VISIBLE OVERLAY */}
-                <div className="absolute bottom-0 left-0 w-full p-3 sm:p-4 rounded-b-xl bg-linear-to-t from-black/80 via-black/40 to-transparent">
-                  <div className="flex items-center justify-between gap-3">
-                    <div className="text-white">
-                      <h3 className="text-base sm:text-lg font-semibold leading-tight">
-                        {item.name}
-                      </h3>
-                      <p className="text-xs sm:text-sm opacity-80">
-                        Batch {item.batch}
-                      </p>
-                    </div>
+      {/* 🔹 Top Section (Dark Curved Shape) */}
+      <section className="relative bg-[#0A3045] text-white pb-20 pt-24 rounded-b-[60px]">
 
-                    <img
-                      src={item.companyLogo}
-                      alt={item.name + " company"}
-                      className="w-10 h-10 sm:w-12 sm:h-12 md:w-14 md:h-14 object-contain rounded-2xl p-1.5 sm:p-2 bg-gray-100"
-                    />
-                  </div>
-                </div>
-              </div>
-            </SwiperSlide>
-          ))}
-        </Swiper>
+        <div className="container mx-auto px-6 grid md:grid-cols-2 gap-10 items-center relative z-10">
 
-        <style jsx>{`
-          .tilt-left {
-            transform: perspective(900px) rotateY(18deg) translateZ(-40px) !important;
-          }
-          .tilt-right {
-            transform: perspective(900px) rotateY(-18deg) translateZ(-40px) !important;
-          }
-        `}</style>
-      </div>
-    </section>
+          {/* LEFT TEXT BLOCK */}
+          <div>
+            <p className="text-sm tracking-widest text-[#FFC94A]">CAMPUS LIFE</p>
+
+            <h1 className="text-4xl font-bold mt-2">Life @ GIMS</h1>
+
+            <p className="mt-4 text-gray-200 leading-relaxed">
+              At GIMS, we foster a vibrant community where learning extends
+              beyond the classroom. It’s a place to grow, innovate, and build
+              lifelong connections while preparing for the challenges of the
+              professional world.
+            </p>
+
+            <button className="mt-6 bg-[#F4B000] text-black font-semibold px-6 py-3 rounded-full shadow-md hover:bg-[#FFC94A] transition">
+              Discover More
+            </button>
+          </div>
+
+          {/* RIGHT IMAGE */}
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6 }}
+            className="flex justify-center"
+          >
+            <div className="bg-white p-4 rounded-2xl shadow-xl">
+              <Image
+                src="/Student/life-at-gims.jpg"
+                width={400}
+                height={300}
+                alt="Students"
+                className="rounded-xl"
+              />
+            </div>
+          </motion.div>
+
+        </div>
+
+        {/* CURVE SHAPE */}
+        <div className="absolute bottom-0 left-0 w-full overflow-hidden leading-[0] rotate-180">
+          <svg
+            className="relative block w-[200%] h-[100px]"
+            viewBox="0 0 1200 120"
+            preserveAspectRatio="none"
+          >
+            <path
+              d="M0,0V46.29c47.79,22.2,103.59,32.17,158,28,70.36-5.46,136.5-33.31,206-37.5,73.84-4.4,147.06,16.53,218,35,69.55,18.13,138.28,24.88,209,13.5,36.15-6,70-17.79,104-29.72V0Z"
+              opacity=".25"
+              fill="#FFFFFF"
+            ></path>
+            <path
+              d="M0,0V15.81C47.19,35,103,55,158,52c70.88-4,137.33-36,206-43,73.68-7.47,147.05,15,218,35,69.42,19.33,138.66,25,209,13,36-6,70-17.77,104-29.72V0Z"
+              opacity=".5"
+              fill="#FFFFFF"
+            ></path>
+            <path
+              d="M0,0V5.63C48,25.41,103.59,46.17,158,43c69.71-4.08,137.39-37.45,206-44,73.47-7.1,147.05,15.11,218,35C651.16,53.27,720,59.45,790,47c35.58-6.44,70.39-17.56,104-29.72V0Z"
+              fill="#FFFFFF"
+            ></path>
+          </svg>
+        </div>
+
+      </section>
+
+      {/* 🔹 Bottom News Section */}
+      <section className="container mx-auto px-6 py-16 grid md:grid-cols-2 gap-14 bg-transparent">
+
+        {/* LEFT IMAGES (Upgraded) */}
+        <div className="relative flex items-start justify-center">
+
+          {/* Main Image */}
+          <div className="bg-white shadow-2xl rounded-3xl p-4 w-80 hover:scale-[1.03] transition duration-300">
+            <Image
+              src="/Student/news1.jpg"
+              width={380}
+              height={320}
+              alt="Students"
+              className="rounded-2xl object-cover"
+            />
+          </div>
+
+          {/* Floating Small Image */}
+          <div className="absolute bottom-[-30px] right-[-20px] bg-white shadow-xl rounded-3xl p-3 w-48 hover:scale-[1.05] transition duration-300">
+            <Image
+              src="/Student/news2.jpg"
+              width={220}
+              height={180}
+              alt="Student"
+              className="rounded-2xl object-cover"
+            />
+          </div>
+
+        </div>
+
+        {/* RIGHT TEXT BLOCK */}
+        <div>
+          <p className="tracking-widest text-[#F4B000] text-sm">STAY INFORMED</p>
+
+          <h2 className="text-3xl font-bold text-[#102A43] mt-2">
+            News & <span className="text-[#005B8C]">Events</span>
+          </h2>
+
+          <p className="text-gray-600 mt-4 leading-relaxed">
+            Our placement season is in full swing, connecting PGDM students with
+            over 200 top recruiters from diverse domains. We're seeing remarkable
+            improvements in packages and profiles, setting the stage for an
+            exceptional year.
+          </p>
+
+          <button className="mt-6 bg-[#005B8C] text-white px-6 py-3 rounded-full shadow hover:bg-[#003f61] transition">
+            Read More
+          </button>
+        </div>
+      </section>
+
+    </div>
   );
 }
